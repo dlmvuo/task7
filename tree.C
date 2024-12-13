@@ -12,9 +12,7 @@ void tree(){
     TFile file("tree.root", "read");
     TTree *tree =(TTree*)file.Get("h10");
 
-    TFile filteredfile("filteredroot.root", "recreate");
     auto filteredtree = tree->CopyTree("Isrfilter == 1 && chi2_3p<30");
-    filteredfile.Write();
 
     filteredtree->SetBranchStatus("*", 0);
     for (auto activeBranchName : {"nph", "eph", "thetaph", "phiph"}){
