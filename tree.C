@@ -10,6 +10,7 @@ double fitfunc(double *x, double *par){
 
 void tree(){
     TFile file("tree.root", "read");
+    TFile newfile("newroot.root", "recreate");
     TTree *tree =(TTree*)file.Get("h10");
 
     auto filteredtree = tree->CopyTree("Isrfilter == 1 && chi2_3p<30");
@@ -18,7 +19,6 @@ void tree(){
     for (auto activeBranchName : {"nph", "eph", "thetaph", "phiph"}){
         filteredtree->SetBranchStatus(activeBranchName, 1);
     }
-    TFile newfile("newroot.root", "recreate");
     auto newtree = filteredtree->CloneTree();
     newfile.Write();
 
